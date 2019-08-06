@@ -21,8 +21,7 @@
       (let [ttl (Integer. (read-line))]
         (solicita-arquivo nome-arquivo socket ttl)
         ;(com-timeout 10000 (recebe-requisicao-ret socket))
-        (let [requisicao ((recebe-requisicao-ret socket))]
-          (println (str "req: " requisicao))
+        (let [requisicao (recebe-requisicao-ret socket)]
           (if requisicao
             (trata-requisicao-ret requisicao)
             (main-loop socket handler))))))
