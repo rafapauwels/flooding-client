@@ -1,8 +1,17 @@
 (in-ns 'cliente.core)
 
+(defn converte-arquivo
+  [caminho-do-arquivo]
+  (with-open [in (io/input-stream (str caminho-do-arquivo "~"))
+            out (io/output-stream caminho-do-arquivo)]
+  (b64/decoding-transfer in out))
+  (io/delete-file (str caminho-do-arquivo "~")))
+
 (defn base64->arquivo
   [b64 destino]
-  (println (str "b64: " b64 ", dest: " destino)))
+  (println (str "Arquivo recebido, salvando em " destino))
+  (spit (str destino "~") (.toString b64))
+  (converte-arquivo destino))
 
 (defn solicita-transferencia
   [endereco-tcp porta caminho-arquivo]
@@ -11,8 +20,7 @@
               writer (io/writer sock)
               reader (io/reader sock)
               resposta (StringWriter.)]
-    (.append writer (str "GET " caminho-arquivo "\n"))
+    (.append writer (str caminho-arquivo "\n"))
     (.flush writer)
     (io/copy reader resposta)
-    (str resposta)
     (base64->arquivo resposta "/home/pauwels/Desktop/omg")))

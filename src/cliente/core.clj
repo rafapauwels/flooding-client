@@ -1,5 +1,7 @@
-(ns cliente.core)
-(require '[clojure.java.io :as io])
+(ns cliente.core
+  (:gen-class))
+(require '[clojure.java.io :as io]
+         '[clojure.data.codec.base64 :as b64])
 (import '[java.net DatagramSocket
           DatagramPacket
           InetSocketAddress
@@ -20,7 +22,7 @@
       (println "Time-to-live da busca: ")
       (let [ttl (Integer. (read-line))]
         (solicita-arquivo nome-arquivo socket ttl)
-        ;(com-timeout 10000 (recebe-requisicao-ret socket))
+;(com-timeout 1000 f)
         (let [requisicao (recebe-requisicao-ret socket)]
           (if requisicao
             (trata-requisicao-ret requisicao)
