@@ -33,7 +33,10 @@
   (let [ret-mapeado (clojure.edn/read-string requisicao-ret)
         endereco-tcp (:endereco-tcp ret-mapeado)
         caminho-arquivo (:caminho-arquivo ret-mapeado)]
-    (solicita-transferencia endereco-tcp 9443 caminho-arquivo)))
+    (solicita-transferencia endereco-tcp 
+                            9443 
+                            caminho-arquivo
+                            (last (clojure.string/split caminho-arquivo #"/")))))
 
 (defn solicita-arquivo
   "TTL default 3, monta e envia requisição usando funções auxiliares"

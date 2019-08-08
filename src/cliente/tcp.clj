@@ -5,7 +5,8 @@
   (with-open [in (io/input-stream (str caminho-do-arquivo "~"))
             out (io/output-stream caminho-do-arquivo)]
   (b64/decoding-transfer in out))
-  (io/delete-file (str caminho-do-arquivo "~")))
+  (io/delete-file (str caminho-do-arquivo "~"))
+  (System/exit 0))
 
 (defn base64->arquivo
   [b64 destino]
@@ -14,7 +15,7 @@
   (converte-arquivo destino))
 
 (defn solicita-transferencia
-  [endereco-tcp porta caminho-arquivo]
+  [endereco-tcp porta caminho-arquivo nome-arquivo]
   (println (str "Solicitação de transferencia sendo enviada para " endereco-tcp))
   (with-open [sock (Socket. endereco-tcp porta)
               writer (io/writer sock)
@@ -23,4 +24,4 @@
     (.append writer (str caminho-arquivo "\n"))
     (.flush writer)
     (io/copy reader resposta)
-    (base64->arquivo resposta "/home/pauwels/Desktop/omg")))
+    (base64->arquivo resposta (str "/home/pauwels/Desktop/" nome-arquivo))))

@@ -17,16 +17,15 @@
 
 (defn main-loop
   [socket handler]
-  (println "\nDigite o nome do arquivo buscado: ")
+  (println "Digite o nome do arquivo buscado: ")
   (let [nome-arquivo (read-line)]
       (println "Time-to-live da busca: ")
       (let [ttl (Integer. (read-line))]
         (solicita-arquivo nome-arquivo socket ttl)
-;(com-timeout 1000 f)
-        (let [requisicao (recebe-requisicao-ret socket)]
+        (let [requisicao (com-timeout 10000 (recebe-requisicao-ret socket))]
           (if requisicao
             (trata-requisicao-ret requisicao)
-            (main-loop socket handler))))))
+            (System/exit 0))))))
 
 (defn -main
   "Ponto de entrada de 'lein run'"
@@ -37,4 +36,4 @@
 
 
 
-;https://stackoverflow.com/questions/6694530/executing-a-function-with-a-timeout
+
