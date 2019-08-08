@@ -24,4 +24,4 @@
     (.append writer (str caminho-arquivo "\n"))
     (.flush writer)
     (io/copy reader resposta)
-    (base64->arquivo resposta (str "/home/pauwels/Desktop/" nome-arquivo))))
+    (base64->arquivo resposta (str "/home/ubuntu/" nome-arquivo))))

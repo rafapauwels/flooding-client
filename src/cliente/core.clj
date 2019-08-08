@@ -1,7 +1,8 @@
 (ns cliente.core
   (:gen-class))
 (require '[clojure.java.io :as io]
-         '[clojure.data.codec.base64 :as b64])
+         '[clojure.data.codec.base64 :as b64]
+         '[clojure.data.json :as json])
 (import '[java.net DatagramSocket
           DatagramPacket
           InetSocketAddress
@@ -32,6 +33,7 @@
   [& args]
   (let [socket (DatagramSocket. 9442)
         handler trata-requisicao-ret]
+    (loop-alvos!)
     (main-loop socket handler)))
 
 

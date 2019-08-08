@@ -43,7 +43,7 @@
   ([nome-arquivo socket]
    (solicita-arquivo nome-arquivo socket 3))
   ([nome-arquivo socket ttl]
-   (let [servidor-alvo (escolhe-servidor-alvo alvos)
+   (let [servidor-alvo (escolhe-servidor-alvo)
          query-pesquisa (constroi-query nome-arquivo ttl)]
      (println (str "Enviando pesquisa por " nome-arquivo " para " servidor-alvo))
      (enviar-query socket query-pesquisa servidor-alvo))))
